@@ -1,0 +1,19 @@
+{
+  "name": "whodis-electron",
+  "private": true,
+  "scripts": {
+    "dev": "electron .",
+    "prod": "electron-packager . --out=prod 'Whodis' --overwrite --platform=mas --arch=x64 --electron-version=1.6.11 --icon=icon.icns"
+  },
+  "devDependencies": {
+    "electron": "^1.6.11",
+    "electron-packager": "^8.7.2"
+  },
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "underscore": "^1.8.3",
+    "vue": "^2.4.2",
+    "vue-resource": "^1.3.4",
+    "menubar": "^5.2.3"
+  }
+}

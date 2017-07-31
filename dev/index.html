@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Whodis</title>
+    <link rel="stylesheet" href="reset.css" type="text/css">
+    <link rel="stylesheet" href="style.css" type="text/css">
+  </head>
+
+  <body>
+    <section class="app">
+      <div class="error" v-if="error">
+        <p v-html="error"></p>
+      </div>
+
+      <div class="identify" v-if="!user">
+        <form class="form" @submit="identify($event)" v-if="!auth.show">
+          <input type="text" placeholder="jim@beam.com" v-model="email" autofocus>
+          <button class="green" type="submit" :class="loading ? 'loading' : ''">{{loading ? 'Sending...' : 'Access'}}</button>
+
+          <div class="clear"></div>
+        </form>
+
+        <form class="form" @submit="identify($event)" v-if="auth.show">
+          <input type="text" placeholder="000000" v-model="auth.code" autofocus>
+          <button class="blue" type="submit" :class="loading ? 'loading' : ''">{{loading ? 'Sending...' : 'Enter'}}</button>
+
+          <div class="clear"></div>
+        </form>
+
+        <div class="text">
+          <h1>Access Whodis</h1>
+          <ol>
+            <li>Enter your email address, click access.</li>
+            <li>Retrieve the 6 digit access code we'll send you.</li>
+            <li>Paste that code here, click enter and you're done.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="lookup" v-if="user">
+        <form class="form" @submit="lookup($event)" >
+          <input type="text" placeholder="jim@beam.com" v-model="email" autofocus>
+          <button class="purple" type="submit" :class="loading ? 'loading' : ''">{{loading ? 'Looking...' : 'Look Up'}}</button>
+
+          <div class="clear"></div>
+        </form>
+
+        <div class="text" v-if="!data">
+          <h1>Welcome</h1>
+          <p>Enter an email address above and we'll return all the information for it that we can find.</p>
+        </div>
+
+        <div class="data" v-if="data">
+          <ul v-for="(value, key) in data">
+            <li><span>{{key}}</span>:</li>
+
+            <ul v-for="(val, ke) in value">
+              <li><span>{{ke}}</span>: {{typeof val !== 'object' || val.length ? val : ''}}</li>
+
+              <ul v-for="(v, k) in val" v-if="typeof val === 'object' && !val.length">
+                <li v-if="val !== 'object'"><span>{{k}}</span>: {{v}}</li>
+              </ul>
+            </ul> 
+          </ul>
+        </div>
+      </div>
+    </section>
+  </body>
+
+  <script>
+    require('./index');
+  </script>
+</html>
